@@ -1,6 +1,7 @@
 package com.iitb.asc.courses.controllers;
 
 import com.iitb.asc.courses.entities.CourseInstance;
+import com.iitb.asc.courses.models.CourseInstanceRegistration;
 import com.iitb.asc.courses.models.ResponseData;
 import com.iitb.asc.courses.services.CourseInstanceService;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +17,8 @@ public class CourseInstanceController {
     }
 
     @PostMapping
-    public ResponseData createInstance(@RequestBody CourseInstance courseInstance){
-        return null;
+    public ResponseData createInstance(@RequestBody CourseInstanceRegistration courseInstanceRegistration){
+        return courseInstanceService.save(courseInstanceRegistration);
     }
 
     @GetMapping("/{year}/{semester}")
@@ -25,16 +26,16 @@ public class CourseInstanceController {
             @PathVariable int year,
             @PathVariable int semester
     ){
-        return null;
+        return courseInstanceService.getCourseInstanceByYearAndSemester(year, semester);
     }
 
     @GetMapping("/{year}/{semester}/{id}")
-    public ResponseData getCourseInstanceByYearAndSemesterAndId(
+    public ResponseData getCourseInstanceByIdAndYearAndSemester(
+            @PathVariable Long id,
             @PathVariable int year,
-            @PathVariable int semester,
-            @PathVariable Long id
+            @PathVariable int semester
     ){
-        return null;
+        return courseInstanceService.getCourseInstanceByIdAndYearAndSemester(id, year, semester);
     }
 
     @DeleteMapping("/{year}/{semester}/{id}")
@@ -43,6 +44,6 @@ public class CourseInstanceController {
             @PathVariable int semester,
             @PathVariable Long id
     ){
-        return null;
+        return courseInstanceService.deleteCourseInstanceByCourseIdAndYearAndSemester(id, year, semester);
     }
 }

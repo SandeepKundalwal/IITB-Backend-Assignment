@@ -3,6 +3,8 @@ package com.iitb.asc.courses.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.Optional;
+
 @Entity
 @Table(name = "course_instance")
 public class CourseInstance {
@@ -13,7 +15,6 @@ public class CourseInstance {
 
     @ManyToOne
     @JoinColumn(name = "course_id")
-    @JsonIgnore
     private Course course;
 
     @Column(name = "year")
