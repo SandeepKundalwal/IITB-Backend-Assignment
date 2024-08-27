@@ -9,7 +9,7 @@ import com.iitb.asc.courses.respositories.CourseRepository;
 import com.iitb.asc.courses.services.CourseService;
 import com.iitb.asc.courses.utils.ResponseCode;
 import com.iitb.asc.courses.utils.ResponseStatus;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;

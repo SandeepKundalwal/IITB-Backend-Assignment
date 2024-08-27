@@ -1,7 +1,6 @@
 package com.iitb.asc.courses.entities;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
