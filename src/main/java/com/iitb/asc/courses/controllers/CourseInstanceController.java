@@ -46,4 +46,11 @@ public class CourseInstanceController {
     ){
         return courseInstanceService.deleteCourseInstanceByCourseIdAndYearAndSemester(id, year, semester);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseData deleteCourseInstance(
+            @PathVariable Long id
+    ){
+        return courseInstanceService.deleteCourseInstanceById(id);
+    }
 }

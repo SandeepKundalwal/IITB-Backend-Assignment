@@ -183,4 +183,30 @@ public class CourseInstanceServiceImpl implements CourseInstanceService {
 
         return responseData;
     }
+
+    @Override
+    public ResponseData deleteCourseInstanceById(Long id) {
+        if(isEmpty(id)){
+            throw new CustomApplicationException(HttpStatus.BAD_REQUEST, "course id cannot be empty");
+        };
+
+        Optional<CourseInstance> courseInstance;
+
+        try {
+            courseInstance = courseInstanceRepository.findById(id);
+
+            if(courseInstance.isEmpty()){
+                responseData = new ResponseData(Response.Status.CREATED.getStatusCode(), ResponseCode.SUCCESS.getCode(), "No data found.");
+            } else {
+                courseInstanceRepository.deleteById(id);
+
+                responseData = new ResponseData(Response.Status.CREATED.getStatusCode(), ResponseCode.SUCCESS.getCode(), "successfully deleted course instance");
+            }
+
+        } catch (DataAccessException e){
+            throw new CustomApplicationException(HttpStatus.INTERNAL_SERVER_ERROR, ResponseCode.SERVER_INTERNAL_SERVER_ERROR.toString());
+        }
+
+        return responseData;
+    }
 }
