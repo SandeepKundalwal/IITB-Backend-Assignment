@@ -21,4 +21,6 @@ public interface CourseInstanceRepository extends JpaRepository<CourseInstance, 
     @Transactional
     @Query(value = "DELETE FROM course_instance ci WHERE ci.course_id=:course_id AND ci.year=:year AND ci.semester=:semester", nativeQuery = true)
     void deleteCourseInstanceByCourseIdAndYearAndSemester(@Param("course_id") Long id, @Param("year") int year, @Param("semester") int semester);
+
+    void deleteByCourseId(Long id);
 }

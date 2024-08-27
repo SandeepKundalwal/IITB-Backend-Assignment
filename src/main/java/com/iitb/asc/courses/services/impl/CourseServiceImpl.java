@@ -4,10 +4,12 @@ import com.iitb.asc.courses.entities.Course;
 import com.iitb.asc.courses.exception.CustomApplicationException;
 import com.iitb.asc.courses.models.CourseRegistration;
 import com.iitb.asc.courses.models.ResponseData;
+import com.iitb.asc.courses.respositories.CourseInstanceRepository;
 import com.iitb.asc.courses.respositories.CourseRepository;
 import com.iitb.asc.courses.services.CourseService;
 import com.iitb.asc.courses.utils.ResponseCode;
 import com.iitb.asc.courses.utils.ResponseStatus;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -21,8 +23,6 @@ import java.util.Optional;
 
 import static org.aspectj.util.LangUtil.isEmpty;
 
-//import static org.apache.commons.lang3.StringUtils.isEmpty;
-
 @Service
 public class CourseServiceImpl implements CourseService {
 
@@ -30,6 +30,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private CourseInstanceRepository courseInstanceRepository;
 
     @Override
     public ResponseData save(CourseRegistration courseRegistration) {
@@ -120,6 +123,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public ResponseData deleteCourseById(Long id) {
         Optional<Course> course = null;
 
@@ -131,6 +135,9 @@ public class CourseServiceImpl implements CourseService {
 
         if(course.isPresent()){
             try {
+
+                courseInstanceRepository.deleteByCourseId(id);
+
                 courseRepository.deleteById(id);
 
                 responseData = new ResponseData(ResponseCode.SUCCESS.getCode(), Response.Status.OK.getStatusCode(), "Deleted course with id: " + id + " successfully.");

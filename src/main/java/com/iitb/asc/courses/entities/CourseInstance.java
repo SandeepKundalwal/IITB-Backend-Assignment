@@ -1,9 +1,6 @@
 package com.iitb.asc.courses.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
-import java.util.Optional;
 
 @Entity
 @Table(name = "course_instance")
