@@ -1,6 +1,7 @@
 package com.iitb.asc.courses.entities;
 
-import jakarta.persistence.*;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "course_instance")

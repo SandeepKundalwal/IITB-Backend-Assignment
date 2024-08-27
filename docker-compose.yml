@@ -1,0 +1,47 @@
+version: '3.7'
+
+services:
+  app:
+    image: sandeepkundalwal/courses-app:latest
+    ports:
+      - 8080:8080
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/courses_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=T22051@gmandi
+    networks:
+      - springboot-mysql-network
+
+  mysqldb:
+    image: mysql:8.0.33
+    ports:
+      - 3307:3306
+    environment:
+      - MYSQL_DATABASE=courses_db
+      - MYSQL_ROOT_PASSWORD=T22051@gmandi
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - springboot-mysql-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      retries: 10
+      interval: 3s
+      timeout: 30s
+
+  frontend:
+    image: sandeepkundalwal/iitb-frontend:latest
+    ports:
+      - 3000:80
+    networks:
+      - springboot-mysql-network
+
+volumes:
+  mysql-data:
+
+networks:
+  springboot-mysql-network:
+    name: springboot-mysql-network
